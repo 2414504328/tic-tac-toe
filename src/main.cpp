@@ -6,7 +6,8 @@ struct ScreenSize
 };
 
 ScreenSize screenSize = { 600, 600 };
-char tttBoard[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
+short tttBoard[3][3] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+const char* playerChar[3] = {" ", "X", "O"};
 int fountSize = 212;
 int xOffset = 31;
 
@@ -34,9 +35,14 @@ int main ()
 		DrawRectangle(0, 194, screenSize.width, 9, BLACK);
 		DrawRectangle(0, 397, screenSize.width, 9, BLACK);
 
-		// draw some text using the default font
-		DrawText("X", 0, 0);
-		DrawText("O", 1, 1);
+		// draw X O
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++) {
+				const char* charToPrint = playerChar[tttBoard[i][j]];
+				DrawText(charToPrint, i, j);
+			}
+		}
 		
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
