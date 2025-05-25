@@ -5,7 +5,8 @@ struct ScreenSize
 	int width, hight;
 };
 
-ScreenSize screenSize = { 600, 600 };
+ScreenSize screenSize = { 600, 640 };
+int bottomBarHight = 40;
 short tttBoard[3][3] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
 const char* playerChar[3] = {" ", "X", "O"};
 int fountSize = 212;
@@ -43,10 +44,11 @@ int main ()
 }
 
 void DrawGame() {
-	DrawRectangle(194, 0, 9, screenSize.hight, BLACK);
-	DrawRectangle(397, 0, 9, screenSize.hight, BLACK);
+	DrawRectangle(194, 0, 9, screenSize.hight - bottomBarHight, BLACK);
+	DrawRectangle(397, 0, 9, screenSize.hight - bottomBarHight, BLACK);
 	DrawRectangle(0, 194, screenSize.width, 9, BLACK);
 	DrawRectangle(0, 397, screenSize.width, 9, BLACK);
+	DrawRectangle(0, 600, screenSize.width, bottomBarHight, BLACK);
 
 	// draw X O
 	for (int i = 0; i < 3; i++)
