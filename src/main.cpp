@@ -11,6 +11,7 @@ const char* playerChar[3] = {" ", "X", "O"};
 int fountSize = 212;
 int xOffset = 31;
 
+void DrawGame();
 void DrawText(const char* text, int x, int y);
 
 int main ()
@@ -30,19 +31,7 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(WHITE);
 
-		DrawRectangle(194, 0, 9, screenSize.hight, BLACK);
-		DrawRectangle(397, 0, 9, screenSize.hight, BLACK);
-		DrawRectangle(0, 194, screenSize.width, 9, BLACK);
-		DrawRectangle(0, 397, screenSize.width, 9, BLACK);
-
-		// draw X O
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++) {
-				const char* charToPrint = playerChar[tttBoard[i][j]];
-				DrawText(charToPrint, i, j);
-			}
-		}
+		DrawGame();
 		
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
@@ -51,6 +40,22 @@ int main ()
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
 	return 0;
+}
+
+void DrawGame() {
+	DrawRectangle(194, 0, 9, screenSize.hight, BLACK);
+	DrawRectangle(397, 0, 9, screenSize.hight, BLACK);
+	DrawRectangle(0, 194, screenSize.width, 9, BLACK);
+	DrawRectangle(0, 397, screenSize.width, 9, BLACK);
+
+	// draw X O
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++) {
+			const char* charToPrint = playerChar[tttBoard[i][j]];
+			DrawText(charToPrint, i, j);
+		}
+	}
 }
 
 void DrawText(const char* text, int x, int y)
