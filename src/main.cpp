@@ -1,4 +1,7 @@
 #include "raylib.h"
+#include<iostream>
+
+using namespace std;
 
 struct ScreenSize
 {
@@ -12,6 +15,7 @@ const char* playerChar[3] = {" ", "X", "O"};
 int fountSize = 212;
 int xOffset = 31;
 
+void Update();
 void DrawGame();
 void DrawText(const char* text, int x, int y);
 
@@ -32,6 +36,8 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(WHITE);
 
+		Update();
+
 		DrawGame();
 		
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
@@ -41,6 +47,35 @@ int main ()
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
 	return 0;
+}
+
+void Update() {
+	bool isMouseClicked = IsMouseButtonPressed(0);
+	if (isMouseClicked) {
+		int mousePosX = GetMouseX();
+		int mousePosY = GetMouseY();
+		//cout << "Mouse Pos: X=" << mousePosX << " Y=" << mousePosY << endl;
+		if (mousePosX >= 0 && mousePosX <= 200) { // A colloum clicked
+			cout << "A colloum clicked" << endl;
+		}else if (mousePosX >= 200 && mousePosX <= 400) { // B colloum clicked
+			cout << "B colloum clicked" << endl;
+		}
+		else /*if (mousePosX >= 400 && mousePosX <= 600)*/ { // C colloum clicked
+			cout << "C colloum clicked" << endl;
+		}
+		if (mousePosY >= 0 && mousePosY <= 200) { // 1st Row clicked
+			cout << "1st Row clicked" << endl;
+		}
+		else if (mousePosY >= 200 && mousePosY <= 400) { // 2nd Row clicked
+			cout << "2nd Row clicked" << endl;
+		}
+		else if (mousePosY >= 400 && mousePosY <= 600) { // 3rd Row clicked
+			cout << "3rd Row clicked" << endl;
+		}
+		else { // 4th Row clicked
+			cout << "4th Row clicked" << endl;
+		}
+	}
 }
 
 void DrawGame() {
