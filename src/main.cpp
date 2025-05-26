@@ -9,7 +9,9 @@ struct ScreenSize
 };
 
 short tttBoard[3][3] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+short turnCount = 0;
 bool isOTurn = false;
+bool currentPlayerWon = false;
 
 const ScreenSize screenSize = { 600, 640 };
 const int bottomBarHight = 40;
@@ -20,6 +22,7 @@ const char* playerChar[3] = {" ", "X", "O"};
 
 void Reset();
 void Update();
+void CheckIfGameEnded();
 void DrawGame();
 void DrawText(const char* text, int x, int y);
 
@@ -62,7 +65,9 @@ void Reset() {
 			tttBoard[i][j] = 0;
 		}
 	}
+	turnCount = 0;
 	isOTurn = false;
+	currentPlayerWon = false;
 }
 
 void Update() {
@@ -112,10 +117,56 @@ void Update() {
 		return;
 	}
 
+	if (tttBoard[row][coloum] == 0 && !currentPlayerWon) {
+		tttBoard[row][coloum] = 1 + isOTurn;
 
+		CheckIfGameEnded();
 
-	tttBoard[row][coloum] = 1 + isOTurn;
-	isOTurn = !isOTurn;
+		if (currentPlayerWon) {
+			return;
+		}
+
+		isOTurn = !isOTurn;
+		turnCount++;
+	}
+}
+
+void CheckIfGameEnded() {
+	bool centerEmty = tttBoard[1][1] == 0;
+	bool topLeftEmty = tttBoard[0][0] == 0;
+	bool bottomRightEmty = tttBoard[2][2] == 0;
+	short currentPlayer = 1 + isOTurn;
+	if (centerEmty && topLeftEmty && bottomRightEmty) {
+		return;
+	}
+
+	bool centerCurrentPlayer = tttBoard[1][1] == currentPlayer;
+	bool topLeftCurrentPlayer = tttBoard[0][0] == currentPlayer;
+	bool bottomRightCurrentPlayer = tttBoard[2][2] == currentPlayer;
+	if (centerCurrentPlayer && topLeftCurrentPlayer && bottomRightCurrentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (centerCurrentPlayer && tttBoard[0][2] == currentPlayer && tttBoard[2][0] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (centerCurrentPlayer && tttBoard[1][0] == currentPlayer && tttBoard[1][2] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (centerCurrentPlayer && tttBoard[0][1] == currentPlayer && tttBoard[2][1] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (topLeftCurrentPlayer && tttBoard[0][1] == currentPlayer && tttBoard[0][2] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (topLeftCurrentPlayer && tttBoard[1][0] == currentPlayer && tttBoard[2][0] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (bottomRightCurrentPlayer && tttBoard[2][0] == currentPlayer && tttBoard[2][1] == currentPlayer) {
+		currentPlayerWon = true;
+	}
+	else if (bottomRightCurrentPlayer && tttBoard[0][2] == currentPlayer && tttBoard[1][2] == currentPlayer) {
+		currentPlayerWon = true;
+	}
 }
 
 void DrawGame() {
