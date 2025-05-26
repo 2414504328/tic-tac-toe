@@ -28,6 +28,8 @@ int main ()
 
 	// Create the window and OpenGL context
 	InitWindow(screenSize.width, screenSize.hight, "Tic Tac Toe");
+
+	Reset();
 	
 	// game loop
 	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
@@ -37,8 +39,6 @@ int main ()
 
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(WHITE);
-
-		Reset();
 
 		Update();
 
