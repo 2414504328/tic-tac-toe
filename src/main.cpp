@@ -8,13 +8,15 @@ struct ScreenSize
 	int width, hight;
 };
 
-ScreenSize screenSize = { 600, 640 };
-int bottomBarHight = 40;
 short tttBoard[3][3] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
-const char* playerChar[3] = {" ", "X", "O"};
-int fountSize = 212;
-int xOffset = 31;
 
+const ScreenSize screenSize = { 600, 640 };
+const int bottomBarHight = 40;
+const int xOffset = 31;
+const int fountSize = 212;
+const char* playerChar[3] = {" ", "X", "O"};
+
+void Reset();
 void Update();
 void DrawGame();
 void DrawText(const char* text, int x, int y);
@@ -36,6 +38,8 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(WHITE);
 
+		Reset();
+
 		Update();
 
 		DrawGame();
@@ -47,6 +51,15 @@ int main ()
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
 	return 0;
+}
+
+void Reset() {
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++) {
+			tttBoard[i][j] = 0;
+		}
+	}
 }
 
 void Update() {
