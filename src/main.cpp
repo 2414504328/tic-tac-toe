@@ -24,7 +24,8 @@ void Reset();
 void Update();
 void CheckIfGameEnded();
 void DrawGame();
-void DrawText(const char* text, int x, int y);
+void DrawXO(const char* text, int x, int y);
+void DrawMessage(const char* text);
 
 int main ()
 {
@@ -114,6 +115,9 @@ void Update() {
 	}
 
 	if (isBottomBarClicked) {
+		if (coloum == 2) {
+			Reset();
+		}
 		return;
 	}
 
@@ -175,18 +179,40 @@ void DrawGame() {
 	DrawRectangle(0, 194, screenSize.width, 9, BLACK);
 	DrawRectangle(0, 397, screenSize.width, 9, BLACK);
 	DrawRectangle(0, 600, screenSize.width, bottomBarHight, BLACK);
+	DrawRectangle(406, 606, 188, 28, RED);
+	DrawText("Reset Game", 415, 606, 28, WHITE);
 
 	// draw X O
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++) {
 			const char* charToPrint = playerChar[tttBoard[i][j]];
-			DrawText(charToPrint, i, j);
+			DrawXO(charToPrint, i, j);
 		}
+	}
+
+	if (currentPlayerWon && isOTurn) {
+		DrawMessage("Player O Won.");
+	}
+	else if (currentPlayerWon) {
+		DrawMessage("Player X Won.");
+	}
+	else if (turnCount == 9) {
+		DrawMessage("Game Over.");
+	}
+	else if (isOTurn) {
+		DrawMessage("Player O Turn.");
+	}
+	else {
+		DrawMessage("Player X Turn.");
 	}
 }
 
-void DrawText(const char* text, int rowIndex, int coloumIndex)
+void DrawXO(const char* text, int rowIndex, int coloumIndex)
 {
 	DrawText(text, coloumIndex * 203 + xOffset, rowIndex * 203, fountSize, BLACK);
+}
+
+void DrawMessage(const char* text) {
+	DrawText(text, xOffset, 609, xOffset, WHITE);
 }
